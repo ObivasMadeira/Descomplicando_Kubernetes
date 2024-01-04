@@ -27,3 +27,24 @@ kind create cluster --config cluster.yaml --name obivas
 
 Confirmar se o mesmo foi criado
 kubectl get nods
+
+Criando um pod de nginx na porta 80 com o nome teste2
+kubectl run teste2 --image=ngnix --port=80
+
+Confirmando crianção do pod
+kubectl get pods
+
+Acessando o pod criando
+kubectl exec -ti teste2 -- bash
+
+Criando um alias para o comando kubectls
+alias k=kubectls
+
+Criando um yaml usando o kubectl com a imagem do ngnix
+kubectl run --image ngnix --port 8- teste2 --dry-run=cliente -o yaml > pod.yaml
+
+
+
+
+
+
