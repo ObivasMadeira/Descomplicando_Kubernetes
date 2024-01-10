@@ -1,1 +1,25 @@
+day-2 Descompilando Pods
+
+Comando importante
+
+kubectl get pods
+kubectl get pods -A # informação de todos os pods
+kubectl get pods -n kube-system # usamos o -n para especificar o name space
+kubectl describe pods nomedopod #traz mas detalhes sobre o pods em execução
+kubectl get pods nomedopod -o yaml # traz as informação em formato yaml dos pods
+kubectl get pods -o wide #traz mais detalhes dos pods em execução
+kubectl get pods -L run #traz os pods que tenham a label "run"
+kubectl delete pods nomedopode # deletar o pods
+kubectl rum nomedopod --image=ngnix --port=80
+kubectl run -i -t image=buysbox # roda um pods da imagem do busybox aonde "-i" interatividade com o pod  e "-t" traz o terminal aonde posso interagir com o pod, assim o pod fica esperando alguma interação com ele, se subir a imagem do buysbox sem isso não funciona, tb nesse modo ao executar o comando vc não entra dentro do pods
+kubectl run -i -t image=alpine # depois de acessar o pod instalamos o curl com o comando apk add curl
+kubectl attach nomedopod -c nomedopod -ti
+kubectl exec -it nomedopod --bash #executar algo no pod com -it de interação e --bash 
+kubectl exec nomedopod -- cat /usr/share/ngnix/html/index.html #comando para trazer a informação do index.html do pods sem necessáriamente acessar o mesmo.
+
+
+(comandos dentro do pod)
+cd /proc/1
+cat cmdline
+cd /proc (tds os processos)
 
