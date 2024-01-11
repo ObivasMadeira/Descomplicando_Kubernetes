@@ -16,10 +16,37 @@ kubectl run -i -t image=alpine # depois de acessar o pod instalamos o curl com o
 kubectl attach nomedopod -c nomedopod -ti
 kubectl exec -it nomedopod --bash #executar algo no pod com -it de interação e --bash 
 kubectl exec nomedopod -- cat /usr/share/ngnix/html/index.html #comando para trazer a informação do index.html do pods sem necessáriamente acessar o mesmo.
+kubectl run nomedopod --image alpine --dry-run=client -0 yaml #fingi que cria um pod e traz a sua saída em yaml
+kubectl run nomedopod --image alpine --dry-run=client -0 yaml > pod.yaml # passa as informação do yaml para um arquivo.yaml
+kubectl apply -f nomedopod.yaml #crianção e atualização de pod usando yaml criando no passo anterior, -f quer fizer "file"
+kubectl delete -f nomedopod.yaml (quando for atualização do yaml atual, pode usar o apply normal, mas se for necessário add mais um container dentro do pod será necessário remover o mesmo e criar novamente.
+kubectl describe pods nomedopod #ira trazer informações sobre o pod se houver erro
+kubectl logs nomedopod #traz o informações de logs
+kubectl logs nomedopo -c nomedocontainer #traz informação de um container especifico dentro do pod
 
+--------------------------------------------------
+Criando pod com limitação de uso de memoria e cpu usando o yaml adicionando a seguintes informações
+OBS: o mais importante antes de subir o pod é saber o consumo da mesma, para evitar problemas no cluster
+
+resources: 
+      limits: 
+        memory: "128Mi" 
+        cpu: "0.5" 
+      requests: 
+        memory: "64Mi" 
+        cpu: "0.3" 
+
+-------------------------------------------------------
 
 (comandos dentro do pod)
 cd /proc/1
 cat cmdline
 cd /proc (tds os processos)
+free -m (ver memória)
+
+Teste de stress para validar o limite de cpu e memória
+apt update
+apt install stress
+stress --cpu 1 --vm 1
+stress --vm-bytes 120M --vm 1
 
