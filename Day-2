@@ -49,4 +49,50 @@ apt update
 apt install stress
 stress --cpu 1 --vm 1
 stress --vm-bytes 120M --vm 1
+-------------------------------------------------------
+Criando pods com volume usando yaml
+
+kubectl apply -f nomedopodcomVolume.ymal
+
+apiVersion: v1 
+kind: Pod 
+metadata: 
+  labels:
+    run: obivas4
+  name: obivas4 
+spec: 
+  containers: 
+  - image: ngnix
+    name: webserver
+    volumeMounts:
+    - mountPath: /obi
+      name: primeiro-volume
+    resources:
+      limits:
+        cpu: "1"
+        memory: "64Mi"
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  volume:
+  - name: primeiro-volume
+    emptyDir:
+      sizeLimit: 256Mi
+Acessar o pode para validar o volume criado
+
+kubectl exe -ti nomedopodcomvolume -- bash
+listar as pastas dentro do container
+ls e procurar pelo o nome criado, nesse exemplo "obi"
+ou tb com o comando "mount" e procurar pelo volume
+
+-----------------------------------------------------------------
+     
+    
+    volumeMounts: 
+    - name: primeiro-emptydir # nome do volume
+      mountPath: /giropops # diretório onde o volume será montado 
+  volumes: 
+  - name: primeiro-emptydir # nome do volume
+    emptyDir: # tipo do volume
+      sizeLimit: 256Mi # tamanho máximo do volume
+
 
